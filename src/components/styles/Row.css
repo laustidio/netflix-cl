@@ -1,4 +1,4 @@
-.row {
+._row {
   color: #fff;
   margin-left: 20px;
 }
@@ -25,6 +25,7 @@
 .row__poster:hover {
   transform: scale(1.08);
   opacity: 1;
+  cursor: pointer;
 }
 
 .row__posterLarge {
@@ -34,4 +35,5 @@
 .row__posterLarge:hover {
   transform: scale(1.10);
   opacity: 1;
+  cursor: pointer;
 }

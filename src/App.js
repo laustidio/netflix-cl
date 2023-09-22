@@ -1,6 +1,7 @@
 import "./App.css";
 import { auth } from "./firebase";
 import React, { useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreen from "./components/pages/HomeScreen";
 import LoginScreen from "./components/pages/LoginScreen";
 import { useDispatch, useSelector } from "react-redux";
