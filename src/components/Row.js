@@ -4,16 +4,16 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import DetailsScreen from "./modal/DetailsScreen";
 
-function Row({ title, fetchUrl, isLargeRow = false }) {
+function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
-  const base_url = "https://image.tmdb.org/t/p/original/";
-  const urlDetails = "https://api.themoviedb.org/3";
-  const [trailerId, setTrailerId] = useState({
-    key: "",
-    banner: "",
-  });
   const [trailerDetails, setTrailerDetails] = useState(null);
-  const api_key = process.env.REACT_APP_API_KEY;
+  const base_url = "https://image.tmdb.org/t/p/original";
+  const urlDetails = "https://api.themoviedb.org/3/movie/";
+  const api__key = process.env.REACT_APP_API_KEY;
+  const [trailerId, setTrailerId] = useState({
+    key: null,
+    banner: null,
+  });
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -29,19 +29,16 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
   }, [fetchUrl]);
 
   async function fetchDataDetails(idMovie) {
-    const responseDetailsMovie = await axios.get(
-      `${urlDetails}/movie/${idMovie}`,
-      {
-        params: {
-          api_key: api_key,
-          append_to_response: "videos,images",
-        },
-      }
-    );
-    renderornot(responseDetailsMovie.data);
+    const responseDetailsMovie = await axios.get(`${urlDetails}${idMovie}`, {
+      params: {
+        api_key: api__key,
+        append_to_response: "videos,images",
+      },
+    });
+    renderDetails(responseDetailsMovie.data);
   }
 
-  const renderornot = (data) => {
+  const renderDetails = (data) => {
     setTrailerDetails(data);
     if (data.videos !== undefined && data.videos.results.length > 0) {
       const trailer = data.videos.results.find((vid) => {
@@ -50,7 +47,13 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
       const key = trailer ? trailer.key : data.videos.results[0].key;
       setTrailerId({ key: key });
     } else {
-      setTrailerId({ banner: "" });
+      const img =
+        data.images.posters.length > 0
+          ? data.images.posters[0].file_path
+          : data.backdrop_path !== null
+          ? data.backdrop_path
+          : "";
+      setTrailerId({ banner: img });
     }
   };
 
@@ -69,6 +72,7 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
                 }}
                 className={`row__poster ${isLargeRow && "row__posterLarge"}`}
                 key={movie.id}
+                id={movie.id}
                 src={`${base_url}${
                   isLargeRow ? movie.poster_path : movie.backdrop_path
                 }`}

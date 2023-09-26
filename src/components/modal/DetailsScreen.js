@@ -1,70 +1,64 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/DetailsScreen.css";
-import Modal from "react-bootstrap/Modal";
-import YouTube from "react-youtube";
-import axios from "axios";
+import Youtube from "../render/Youtube";
+import Banner from "../render/BannerDetails";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { ButtonToolbar, OverlayTrigger, Popover } from "react-bootstrap";
 
 function DetailsScreen({ trailerId, trailerDetails, closeDetails }) {
-  console.log(trailerDetails);
-  useEffect(() => {
-    renderTrailer();
-    // eslint-disable-next-line
-  }, [trailerId, trailerDetails]);
-
-  const renderTrailer = () => {
-    return (
-      <YouTube
-        videoId={trailerId.key}
-        opts={{
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            loop: 1,
-            iv_load_policy: 3,
-            modestbranding: 1,
-            rel: 0,
-          },
-        }}
-      />
-    );
-  };
-
-  const renderbanner = async () => {
-    if (trailerDetails.backdrop_path) {
-      const imgage = await axios.get(
-        `https://image.tmdb.org/t/p/w500${trailerDetails.backdrop_path}`
-      );
-      return <div></div>;
-    } else {
-      alert("Unspected error!");
-    }
-  };
+  const popoverHoverFocus = (
+    <Popover id="popover-trigger-hover-focus" title="Popover top">
+      <p>Add to my list</p>
+    </Popover>
+  );
 
   return (
-    <>
-      <div className="detailsScreen__video">
-        <div className="detailsScreen__video__button">
-          <button
-            onClick={() => closeDetails}
-            className="detailsScreen__video--button"
-          >
-            X
-          </button>
-        </div>
-        <div style={{ position: "relative" }}>
-          {trailerId.key !== "" && trailerId.banner === undefined
-            ? renderTrailer()
-            : renderbanner}
-        </div>
-        <div className="detailsScreen__video--fadebottom" />
+    <div className="detailsScreen__video">
+      <div className="detailsScreen__video__button">
+        <button
+          className="detailsScreen__video--button"
+          onClick={() => {
+            closeDetails(true);
+          }}
+        >
+          X
+        </button>
       </div>
-      <Modal.Body className="detailsScreen__body">
-        <div className="detailsScreen__details">
-          <h3>Details</h3>
+      <div style={{ position: "relative", marginBottom: "-6px" }}>
+        {trailerId.key != null ? (
+          <Youtube id={trailerId.key} />
+        ) : trailerId.banner != null && trailerId.banner !== "" ? (
+          <Banner trailerData={trailerDetails} />
+        ) : (
+          <Youtube id={"sY2djp46FeY"} />
+        )}
+      </div>
+      <div className="detailsScreen__video__title">
+        <h2>{trailerDetails?.original_title}</h2>
+        <div className="detailsScreen__video__title--div">
+          <button className="detailsScreen__video__title--play">
+            <FontAwesomeIcon icon={faPlay} />
+            <div></div>
+            <span>Play</span>
+          </button>
+          <ButtonToolbar>
+            <OverlayTrigger
+              trigger={"hover"}
+              container={this}
+              placement="top"
+              overlay={popoverHoverFocus}
+            >
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                className="fa-thin plus-icon"
+              />
+            </OverlayTrigger>
+          </ButtonToolbar>
         </div>
-      </Modal.Body>
-      <Modal.Footer></Modal.Footer>
-    </>
+      </div>
+      <div className="detailsScreen__video--fadebottom" />
+    </div>
   );
 }
 

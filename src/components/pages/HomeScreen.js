@@ -13,15 +13,43 @@ function HomeScreen() {
       <Row
         title="NETFLIX ORIGINALS"
         fetchUrl={requests.fetchNetflixOriginals}
-        isLargeRow
+        isLargeRow={true}
       />
-      <Row title="Trending Now" fetchUrl={requests.fetchTrending} />
-      <Row title="Top Rated" fetchUrl={requests.fetchToRapted} />
-      <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />
-      <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies} />
-      <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
-      <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies} />
-      <Row title="Documentaries" fetchUrl={requests.fetchDocumentariesMovies} />
+      <Row
+        isLargeRow={false}
+        title="Trending Now"
+        fetchUrl={requests.fetchTrending}
+      />
+      <Row
+        isLargeRow={false}
+        title="Top Rated"
+        fetchUrl={requests.fetchToRapted}
+      />
+      <Row
+        isLargeRow={false}
+        title="Action Movies"
+        fetchUrl={requests.fetchActionMovies}
+      />
+      <Row
+        isLargeRow={false}
+        title="Comedy Movies"
+        fetchUrl={requests.fetchComedyMovies}
+      />
+      <Row
+        isLargeRow={false}
+        title="Horror Movies"
+        fetchUrl={requests.fetchHorrorMovies}
+      />
+      <Row
+        isLargeRow={false}
+        title="Romance Movies"
+        fetchUrl={requests.fetchRomanceMovies}
+      />
+      <Row
+        isLargeRow={false}
+        title="Documentaries"
+        fetchUrl={requests.fetchDocumentariesMovies}
+      />
     </div>
   );
 }

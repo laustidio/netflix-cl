@@ -23,8 +23,8 @@
   position: fixed;
   left: 0;
   top: 10px;
-  width: 80px;
-  padding-left: 30px;
+  width: 125px;
+  padding-left: 35px;
   object-fit: contain;
   cursor: pointer;
 }
