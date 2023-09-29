@@ -1,0 +1,30 @@
+.alertMessage--button {
+  background-color: #181818;
+  color: white;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  border: unset;
+}
+
+.alertMessage__close-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alertMessage--button:active {
+    box-shadow: 0px 0px 0px 3px rgb(255, 255, 255);
+}
+
+.alert-heading > p {
+  color: rgba(255, 60, 42, 0.744);
+}
+
+.alertMessage--title {
+  color: rgba(255, 60, 42, 0.744);
+}
+
+.modal-content {
+  background-color: unset !important;
+  border: unset;
+}

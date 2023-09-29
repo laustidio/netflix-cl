@@ -13,6 +13,9 @@ function Youtube(id) {
           modestbranding: 0,
           rel: 0,
           mute: 1,
+          autohide: 1,
+          wmode: "opaque",
+          origin: "http://localhost:3000",
         },
       }}
     />

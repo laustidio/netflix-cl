@@ -29,7 +29,7 @@
 
 .detailsScreen__video__title {
   position: absolute;
-  bottom: 8rem;
+  bottom: 4rem;
   left: 2rem;
   z-index: 1;
   width: 60vw;
@@ -101,6 +101,26 @@
 .plus-icon:hover {
   color: rgb(0 0 0 / 71%);
   border: 2px solid #dedede61;
+}
+
+.detailsScreen__video__title--like {
+  background: #2f2f2f;
+  border: 1px solid #000;
+  border-radius: 50%;
+}
+
+.thumbs-up {
+  color: rgb(198 198 198);
+  background-color: #2f2f2f;
+  border-radius: 50%;
+  border: 2px solid #777777;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.thumbs-up:hover {
+  border: 2px solid #cfcfcf;
 }
 
 #popover-trigger-hover-focus > p {

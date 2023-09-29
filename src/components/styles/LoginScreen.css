@@ -49,14 +49,14 @@
 .loginScreen__button {
   position: fixed;
   right: 20px;
-  top: 20px;
-  padding: 10px 20px;
+  top: 18px;
+  padding: 5px 15px;
   font-size: 1rem;
-  color: #fff;
+  color: #ddd;
   background-color: #e50914;
   font-weight: 600;
   border: none;
-  cursor: pointer;
+  border-radius: 10%;
 }
 
 .loginScreen__logo {
@@ -70,10 +70,12 @@
 .loginScreen__input > form > input {
   padding: 10px;
   outline-width: 0;
-  height: 30px;
+  height: 3.4rem;
   width: 30%;
   border: none;
   max-width: 600px;
+  background: rgb(0 0 0 / 65%);
+  color: #8c8c8c;
 }
 
 .loginScreen__input {
@@ -81,7 +83,7 @@
 }
 
 .loginScreen__getStarted {
-  padding: 15px 20px 17px 20px;
+  padding: 15px 20px 15.5px 20px;
   font-size: 1rem;
   background-color: #e50914;
   color: #fff;

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileScreen from "./components/pages/ProfileScreen";
 import { login, logout, selectUser } from "./features/userSlice";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 function App() {
   const user = useSelector(selectUser);

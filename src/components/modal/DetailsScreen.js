@@ -3,7 +3,11 @@ import "../styles/DetailsScreen.css";
 import Youtube from "../render/Youtube";
 import Banner from "../render/BannerDetails";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faPlusCircle,
+  faThumbsUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { ButtonToolbar, OverlayTrigger, Popover } from "react-bootstrap";
 
 function DetailsScreen({ trailerId, trailerDetails, closeDetails }) {
@@ -12,7 +16,7 @@ function DetailsScreen({ trailerId, trailerDetails, closeDetails }) {
       <p>Add to my list</p>
     </Popover>
   );
-
+  
   return (
     <div className="detailsScreen__video">
       <div className="detailsScreen__video__button">
@@ -44,7 +48,7 @@ function DetailsScreen({ trailerId, trailerDetails, closeDetails }) {
           </button>
           <ButtonToolbar>
             <OverlayTrigger
-              trigger={"hover"}
+              trigger={["hover", "focus"]}
               container={this}
               placement="top"
               overlay={popoverHoverFocus}
@@ -55,6 +59,7 @@ function DetailsScreen({ trailerId, trailerDetails, closeDetails }) {
               />
             </OverlayTrigger>
           </ButtonToolbar>
+          <FontAwesomeIcon icon={faThumbsUp} className="thumbs-up fa-lg" />
         </div>
       </div>
       <div className="detailsScreen__video--fadebottom" />

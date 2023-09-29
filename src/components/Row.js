@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import DetailsScreen from "./modal/DetailsScreen";
+import AlertMessage from "./alerts/AlertMessage";
 
 function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
@@ -19,33 +20,62 @@ function Row({ title, fetchUrl, isLargeRow }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [showAlert, setShowAlert] = useState(false);
+  const handleCloseAlert = () => setShowAlert(false);
+  const handleShowAlert = () => setShowAlert(true);
+
+  const [messageAlert, setMessageAlert] = useState("");
+  const [alertColor, setAlertColor] = useState("");
+  const [messageTitle, setMessageTitle] = useState("");
+
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(fetchUrl);
-      setMovies(request.data.results);
+      await axios
+        .get(fetchUrl)
+        .then((results) => {
+          setMovies(results.data.results);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
 
     fetchData();
   }, [fetchUrl]);
 
   async function fetchDataDetails(idMovie) {
-    const responseDetailsMovie = await axios.get(`${urlDetails}${idMovie}`, {
-      params: {
-        api_key: api__key,
-        append_to_response: "videos,images",
-      },
-    });
-    renderDetails(responseDetailsMovie.data);
+    await axios
+      .get(`${urlDetails}${idMovie}`, {
+        params: {
+          api_key: api__key,
+          append_to_response: "videos,images",
+        },
+      })
+      .then((results) => {
+        renderDetails(results.data);
+      })
+      .catch(() => {
+        setMessageTitle("Oops! It seems there was an error with this video!");
+        setMessageAlert(
+          "Sorry, this video is not available for viewing. Please, be free to choose another video."
+        );
+        setAlertColor("danger");
+        handleShowAlert();
+        setTimeout(() => {
+          handleClose();
+        }, 5000);
+      });
   }
 
   const renderDetails = (data) => {
     setTrailerDetails(data);
     if (data.videos !== undefined && data.videos.results.length > 0) {
       const trailer = data.videos.results.find((vid) => {
-        return vid.name === "Official Trailer";
+        return vid.name === "Official Trailer" || "Main Trailer";
       });
       const key = trailer ? trailer.key : data.videos.results[0].key;
       setTrailerId({ key: key });
+      handleShow(true);
     } else {
       const img =
         data.images.posters.length > 0
@@ -54,6 +84,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
           ? data.backdrop_path
           : "";
       setTrailerId({ banner: img });
+      handleShow(true);
     }
   };
 
@@ -67,7 +98,6 @@ function Row({ title, fetchUrl, isLargeRow }) {
               (!isLargeRow && movie.backdrop_path)) && (
               <img
                 onClick={() => {
-                  handleShow(true);
                   fetchDataDetails(movie.id);
                 }}
                 className={`row__poster ${isLargeRow && "row__posterLarge"}`}
@@ -94,6 +124,20 @@ function Row({ title, fetchUrl, isLargeRow }) {
                 closeDetails={handleClose}
                 trailerId={trailerId}
                 trailerDetails={trailerDetails}
+              />
+            </Modal>
+          </>
+        )}
+      </div>
+      <div>
+        {showAlert && (
+          <>
+            <Modal show={showAlert} onHide={handleCloseAlert}>
+              <AlertMessage
+                closeAlert={handleCloseAlert}
+                title={messageTitle}
+                message={messageAlert}
+                color={alertColor}
               />
             </Modal>
           </>
